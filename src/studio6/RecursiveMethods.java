@@ -1,5 +1,7 @@
 package studio6;
 
+import java.util.ArrayList;
+
 import edu.princeton.cs.introcs.StdDraw;
 
 public class RecursiveMethods {
@@ -12,28 +14,52 @@ public class RecursiveMethods {
 	 *         ...)
 	 */
 	public static double geometricSum(int n) {
-		
-			// FIXME compute the geometric sum for the first n terms recursively
-			return 0;
+		if(n==0){
+			return 0.0;
+		}
+		return 1.0/(Math.pow(2, n))+geometricSum(n-1);
 		
 	}
 
 	
-	/**
-	 * @param xCenter                       x-coordinate of the center of the circle
-	 *                                      at the current depth
-	 * @param yCenter                       y-coordinate of the center of the circle
-	 *                                      at the current depth
-	 * @param radius                        radius of the circle at the current
-	 *                                      depth
-	 * @param radiusMinimumDrawingThreshold radius above which drawing should occur
-	 */
-	public static void circlesUponCircles(double xCenter, double yCenter, double radius, double radiusMinimumDrawingThreshold) {
-		
-		// FIXME complete the recursive drawing
-	}
+/**
+  * @param xCenter                       x-coordinate of the center of the circle
+  *                                      at the current depth
+  * @param yCenter                       y-coordinate of the center of the circle
+  *                                      at the current depth
+  * @param radius                        radius of the circle at the current
+  *                                      depth
+  * @param radiusMinimumDrawingThreshold radius above which drawing should occur
+  */
+ public static void circlesUponCircles(double xCenter, double yCenter, double radius, double radiusMinimumDrawingThreshold) {
+  
+  // FIXME complete the recursive drawing
+
+  double bound = 5.0;
+  StdDraw.setXscale(-bound, bound);
+  StdDraw.setYscale(-bound, bound);  
+
+  StdDraw.circle(xCenter, yCenter, radius);
+
+  if(radius < radiusMinimumDrawingThreshold){
+   StdDraw.circle(xCenter, yCenter, radius);
+  } else{
+   circlesUponCircles(xCenter-radius, yCenter, radius/3, radiusMinimumDrawingThreshold);
+   circlesUponCircles(xCenter+radius, yCenter, radius/3,radiusMinimumDrawingThreshold);
+   circlesUponCircles(xCenter, yCenter+radius, radius/3, radiusMinimumDrawingThreshold);
+   circlesUponCircles(xCenter, yCenter-radius, radius/3, radiusMinimumDrawingThreshold);
+  }
+
+ }
 	
 
+	public static int[] helper(int[] original, int[] result, int indexx){
+		if(indexx>=original.length){
+			return result;
+		}
+		result[indexx]=original[original.length-1-indexx];
+		return helper(original, result, indexx+1);
+	}
 	/**
 	 * This method uses recursion to create a reverse of the given array
 	 * 
@@ -41,10 +67,12 @@ public class RecursiveMethods {
 	 * @return an array with the same data as the input but it reverse order
 	 */
 	public static int[] toReversed(int[] array) {
-		
-			// FIXME create a helper method that can recursively reverse the given array
-			return new int[0];
-		
+		if(array==null){
+			return null;
+		}
+		int num=array.length;
+		int[] result = new int[num];
+		return helper(array, result, 0);
 	}
 
 	/**
@@ -55,11 +83,11 @@ public class RecursiveMethods {
 	 * @param q second operand
 	 * @return greatest common divisor of p and q
 	 */
-	public static int gcd(int p, int q) {
-		
-			// FIXME compute the gcd of p and q using recursion
-			return 0;
-		
+	public static int gcd(int p, int q) {		
+		if(p%q==0){
+			return q;
+		}
+		return gcd(q,p%q);
 	}
 
 
